@@ -1,7 +1,8 @@
 --------------Plan--------------------
 
-1. Logowanie/Rejestracja
-    Można się zarejestrować i zalogować. Zalogowana osoba widzi inny widok niż niezalogowana.
+///1. Logowanie/Rejestracja
+    ///Można się zarejestrować i zalogować. Zalogowana osoba widzi inny widok niż niezalogowana.
+------------------------------
 2. produkty / składniki
     Użytkownik może przeglądać produkty/składniki. Produkty/składniki mają:
         - tytuł
