@@ -1,0 +1,47 @@
+--------------Plan--------------------
+
+1. Logowanie/Rejestracja
+    Można się zarejestrować i zalogować. Zalogowana osoba widzi inny widok niż niezalogowana.
+2. produkty / składniki
+    Użytkownik może przeglądać produkty/składniki. Produkty/składniki mają:
+        - tytuł
+        - zdjęcie
+        - ew. opis (np. skład)
+        - kalorie / 100g
+        - tagi
+        - makroelementy
+        - mikrolementy
+3. produkty / składniki - c.d.
+   Użytkownik może mieć uprawnienia admina. Jeśli ma, to może przeglądać, dodawać i edytować użytkowników i produkty/składniki
+4. jadłospis
+   - każdy użytkownik ma swój jadłospis. jadłospis to połączenie użytkownika z potrawą/produktem/składnikiem w określonym czasie.
+   widoczny w osobnej zakładce w formie kalendarza w widoku tygodniowym.
+   - użytkownik może dodawać wpisy do jadłospisu. wpis składa się z:
+       - daty
+       - godziny (nieobowiązkowe)
+       - produktów/składników (w dowolnej ilości)
+   - w widoku kalendarza dla każdego dnia są obliczane statystyki:
+        - kalorie
+        - makro
+        - mikrolementy po rozwinięciu
+5. cele kaloryczne
+    użytkownik może ustawić dzienne cele kaloryczne. cel może być ustawiony ogólnie (na wszystkie dni) lub na konkretny dzień.
+    ustawienie na konkretny dzień ma większa moc niż ustawienie ogólne. ustawienia ogólne działają tylko na przyszłe daty
+    (jest zachowana historia starych celów)
+6. składniki/produkty można łączyć w potrawy. potrawa ma:
+    - nazwę
+    - zdjęcie
+    - opis (sposób wykonania)
+    - tagi
+    - nieokreśloną liczbę składników/produktów w określonych proporcjach
+    Potrawę można dodać do jadłospisu
+7.  Lista zakupów
+8.  Dodawanie potraw do ulubionych
+9.  Dodawanie produktów/składników/potraw przez użytkowników. Najpierw mogą być używane tylko przez osobę która je dodała.
+    Jeśli admin je zatwierdzi to stają się ogólnodostępne
+10.  Pomocnik w układaniu jadłospisu na dzień/tydzień. Podaje propozycje posiłków biorąc pod uwagę cel kaloryczny, makro/mikro,
+    jakie potrawy są w ulubionych, jak często dane potrawy były w historii posiłków użytkownika itp. Możliwość filtrów wykluczających, tzn.
+    jakich produktów chcemy unikać w potrawach (brokuły itp.)
+
+
+
