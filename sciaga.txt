@@ -1,0 +1,16 @@
+---uruchamianie serwera
+php artisan serve &
+brew services start mysql
+
+1. tworzenie modelu, kontrolera, migracji i factory za jednym zamachem
+php artisan make:model TestowaNazwa -c -m -f
+
+2. uzupełnienie pól w migracji
+3. uzupełnienie domyślnych wartości pól w factory
+4. dodawanie rekordów z cli - tinker
+php artisan tinker
+\App\Models\Product::factory()->create();
+kilka na raz: \App\Models\Product::factory()->count(999)->create();
+
+5. kompilacja css/js (webpack mix):
+npm run dev / npm run prod
