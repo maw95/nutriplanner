@@ -15,4 +15,5 @@ class Product extends Model
 
     public $timestamps = true;
 
+    protected $fillable = ['name', 'details', 'image_path'];
 }

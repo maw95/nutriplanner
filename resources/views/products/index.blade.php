@@ -16,7 +16,7 @@
     <div class="content">
         <div class="row">
                 @foreach($products as $product)
-                <div class="col-md-4 col-sm-6 col-12 flex-wrap text-center mb-4">
+                <div class="col-md-3 col-sm-6 col-12 flex-wrap text-center mb-4">
                     <div class="card">
                         <a href="{{ route('products.edit',[$product->id]) }}">
                             <div class="card-header bg-primary align-content-center p-2">

@@ -70,7 +70,7 @@ class ProductsController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
-        return view('cars.show')->with('car', $product);
+        return view('products.show')->with('product', $product);
     }
 
     /**
@@ -81,8 +81,8 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id)->first();
-        return view('cars.edit')->with('car', $product);
+        $product = Product::find($id);
+        return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -98,15 +98,21 @@ class ProductsController extends Controller
             'name' => 'required|unique:products|max:255',
             'image' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
-        $image_name = time().'-'.$request->name . '.'.$request->image->extension();
-        $request->image->move(public_path('images'), $image_name);
 
-        $product = Product::where('id', $id)
-            ->update([
-                'name' => $request->input('name'),
-                'details' => $request->input('details'),
-                'image_path' => $image_name
-            ]);
+        $product = Product::find($id);
+        if(!is_null($request->image))
+        {
+            $image_path = time().'-'.$request->name . '.'.$request->image->extension();
+            $request->image->move(public_path('images'), $image_path);
+            $product->image_path = $image_path;
+        }
+
+        if(!is_null($request->input('details')))
+            $product->details = $request->details;
+
+        $product->name = $request->input('name');
+
+        $product->save();
 
         return redirect()->route('products.index')->with('success', "{$product->name} has been updated");
     }
