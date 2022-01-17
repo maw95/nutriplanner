@@ -16,32 +16,39 @@
     <div class="content">
         <div class="row">
             <div class="col-12 flex-wrap mb-4">
-                <form method="post" enctype="multipart/form-data" action="{{ route('products.store') }}">
                     <div class="card">
                             <div class="card-body">
-                                    @csrf
+                                <form id="product-form" method="post" action="{{ route('products.store') }}">
+                                @csrf
                                     <div class="form-group">
                                         <label for="name">{{__('Name')}}</label>
-                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required/>
+                                        <input type="text" class="form-control" name="name" required/>
                                     </div>
                                     <div class="form-group">
                                         <label for="details">{{__('Details')}}</label>
-                                        <input type="text" class="form-control" name="details" value="{{ old('details') }}"/>
+                                        <input type="text" class="form-control" name="details"/>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="image">{{__('Image')}}</label>
-                                        <br>
-                                        <span class="btn btn-raised btn-round btn-default btn-file">
+                                    <input type="file" class="form-control-file" name="image" for="image_name" accept="image/png, image/jpeg, image/jpg"/>
+
+                                </form>
+                                <div class="form-group">
+                                    <label for="image">{{__('Image')}}</label>
+                                    <br>
+                                    <span class="btn btn-raised btn-round btn-default btn-file">
+                                        <form method="post" action="{{route('products_ajax_image')}}" enctype="multipart/form-data" method="post">
+                                            @csrf
                                             <span class="fileinput-new">{{__('Select image')}}</span>
-                                            <input type="file" class="form-control-file" name="image" accept="image/png, image/jpeg, image/jpg" value="{{ old('details') }}"/>
-                                        </span>
-                                    </div>
+                                            <input type="file" class="with-preview form-control-file" name="image" for="image_name" accept="image/png, image/jpeg, image/jpg"/>
+                                            <img class="image-preview img-thumbnail img-fluid hidden" src=""/>
+                                            <input type="hidden" form="product-form" name="image_name"/>
+                                        </form>
+                                    </span>
+                                </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-round ">{{__('Submit')}}</button>
+                                <button type="submit" form="product-form" class="btn btn-primary btn-round ">{{__('Submit')}}</button>
                             </div>
                     </div>
-                </form>
             </div>
         </div>
     </div>

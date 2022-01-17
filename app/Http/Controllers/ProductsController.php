@@ -48,14 +48,11 @@ class ProductsController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:products|max:255',
-            'image' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
-        $image_name = time().'-'.$request->name . '.'.$request->image->extension();
-        $request->image->move(public_path('images'), $image_name);
         $product = Product::create([
             'name' => $request->input('name'),
             'details' => $request->input('details'),
-            'image_path' => $image_name
+            'image_path' => $request->input('image_name')
         ]);
 
         return redirect()->route('products.index')->with('success', "{$product->name} has been added");
@@ -128,4 +125,32 @@ class ProductsController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', "{$product->name} has been deleted");
     }
+
+    /**
+     * Upload image via ajax
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function ajax_image(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpg,png,jpeg|max:5048'
+        ]);
+        $image_name = time() . '.' . $request->image->extension();
+        $image = $request->image;
+        $img = Image::make($image->path());
+        $img->resize(300, 300, function ($const) {
+            $const->aspectRatio();
+        })->save(public_path('images/thumbnail/').'/'.$image_name);
+
+        $img->move(public_path('images/original/'), $image_name);
+
+
+        return response()->json([
+            'status' => 'success',
+            'image_name' => $image_name,
+            'public_path' => public_path('images')
+        ]);
+    }
+
 }

@@ -171,3 +171,19 @@ function hexToRGB(hex, alpha) {
         return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 }
+
+$(document).on('change','input[type="file"].with-preview', function(){
+    console.log($(this).val());
+    console.log(ajaxForm($(this).parents("form")));
+});
+function ajaxForm(form)
+{
+    let formData
+    $.ajax({
+        type: "POST",
+        url: $(form).attr('action'),
+        data: $(form).serialize()
+    }).done(function(response){
+        return response;
+    });
+}
