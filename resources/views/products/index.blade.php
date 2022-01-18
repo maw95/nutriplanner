@@ -26,7 +26,7 @@
                             </div>
                             <div class="card-body">
                                 @if(isset($product->image_path))
-                                    <img src="{{ asset('images/'. $product->image_path) }}" class="shadow-lg img-fluid img-thumbnail">
+                                    <img src="{{ asset('images/thumbnail/'. $product->image_path) }}" class="shadow-lg img-fluid img-thumbnail">
                                 @endif
                                 <p>{{$product->details}}</p>
                             </div>

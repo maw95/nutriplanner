@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
+use Validator;
 
 class ProductsController extends Controller
 {
@@ -133,23 +135,28 @@ class ProductsController extends Controller
      */
     public function ajax_image(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,png,jpeg|max:5048'
         ]);
+        if(!$validator->passes())
+        {
+            return response()->json([
+                'status' => 'error',
+                'error' => $validator->errors()->all()
+            ]);
+        }
+
         $image_name = time() . '.' . $request->image->extension();
         $image = $request->image;
         $img = Image::make($image->path());
+        $img->save(public_path('images/original/'.$image_name) );
         $img->resize(300, 300, function ($const) {
             $const->aspectRatio();
-        })->save(public_path('images/thumbnail/').'/'.$image_name);
-
-        $img->move(public_path('images/original/'), $image_name);
-
+        })->save(public_path('images/thumbnail/').$image_name);
 
         return response()->json([
             'status' => 'success',
-            'image_name' => $image_name,
-            'public_path' => public_path('images')
+            'image_src' => $image_name
         ]);
     }
 

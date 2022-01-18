@@ -171,19 +171,38 @@ function hexToRGB(hex, alpha) {
         return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 }
-
-$(document).on('change','input[type="file"].with-preview', function(){
-    console.log($(this).val());
-    console.log(ajaxForm($(this).parents("form")));
+$(document).on('change','input.with-preview', function(){
+    let resp = ajaxForm($(this).parents('form'));
+    console.log(resp);
 });
 function ajaxForm(form)
 {
-    let formData
+    let formData = new FormData($(form)[0]);
     $.ajax({
         type: "POST",
         url: $(form).attr('action'),
-        data: $(form).serialize()
-    }).done(function(response){
-        return response;
+        data: formData,
+        contentType: false,
+        processData: false,
+    }).done(function(resp){
+        if(resp.status == 'success')
+        {
+            $('.image-preview').attr('src','/images/thumbnail/'+resp.image_src);
+            $('.image-preview').removeClass('hidden');
+            $('.image-preview-error').addClass('hidden');
+            $('input[name="image_name"]').val(resp.image_src);
+        }
+        else
+        {
+            $('.image-preview').attr('src','');
+            $('.image-preview').addClass('hidden');
+            $('.image-preview-error').removeClass('hidden');
+            $('input[name="image_name"]').val('');
+            if(resp.error)
+            {
+                $('.image-preview-error-info').html(resp.error)
+                $('.image-preview-error-info').removeClass('hidden');
+            }
+        }
     });
 }
