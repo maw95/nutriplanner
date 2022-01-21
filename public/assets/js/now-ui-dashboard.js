@@ -172,12 +172,13 @@ function hexToRGB(hex, alpha) {
     }
 }
 $(document).on('change','input.with-preview', function(){
-    let resp = ajaxForm($(this).parents('form'));
-    console.log(resp);
+    var resp = ajaxForm($(this).parents('form'));
 });
+
+
 function ajaxForm(form)
 {
-    let formData = new FormData($(form)[0]);
+    var formData = new FormData($(form)[0]);
     $.ajax({
         type: "POST",
         url: $(form).attr('action'),

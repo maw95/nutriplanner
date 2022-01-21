@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Validator;
 
@@ -36,7 +37,8 @@ class ProductsController extends Controller
      */
     public function create()
     {
-
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
         return view('products.create');
     }
 
@@ -48,6 +50,9 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
+
         $request->validate([
             'name' => 'required|unique:products|max:255',
         ]);
@@ -80,6 +85,9 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
+
         $product = Product::find($id);
         return view('products.edit')->with('product', $product);
     }
@@ -93,24 +101,16 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
+
         $request->validate([
             'name' => 'required|unique:products|max:255',
-            'image' => 'mimes:jpg,png,jpeg|max:5048'
         ]);
-
         $product = Product::find($id);
-        if(!is_null($request->image))
-        {
-            $image_path = time().'-'.$request->name . '.'.$request->image->extension();
-            $request->image->move(public_path('images'), $image_path);
-            $product->image_path = $image_path;
-        }
-
-        if(!is_null($request->input('details')))
-            $product->details = $request->details;
-
         $product->name = $request->input('name');
-
+        $product->details = $request->input('details');
+        $product->image_path = $request->input('image_path');
         $product->save();
 
         return redirect()->route('products.index')->with('success', "{$product->name} has been updated");
@@ -124,6 +124,9 @@ class ProductsController extends Controller
      */
     public function destroy(Product $product)
     {
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
+
         $product->delete();
         return redirect()->route('products.index')->with('success', "{$product->name} has been deleted");
     }
@@ -135,6 +138,9 @@ class ProductsController extends Controller
      */
     public function ajax_image(Request $request)
     {
+        if(!Auth::user()->admin)
+            return redirect()->route('products.index')->with('error', "Restricted for admins");
+
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpg,png,jpeg|max:5048'
         ]);
