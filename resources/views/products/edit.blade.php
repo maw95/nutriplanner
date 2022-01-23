@@ -38,14 +38,15 @@
                         <div class="col-lg-4 col-sm-6 col-12">
                             <div class="form-group float-right">
                                 <form action="{{ route('products.destroy',[$product->id]) }}" method="post">
+                                    @csrf
                                     @method('DELETE')
                                     <button type="submit" class="destroy-button btn btn-danger btn-lg btn-round text-white align-items-center d-flex">
-                                        <i class="far fa-eye mr-2 big-icon"></i> {{__('Show product')}}
+                                        <i class="far fa-trash-alt mr-2 big-icon"></i> {{__('Delete product')}}
                                     </button>
                                 </form>
                                 <label for="image">{{__('Image')}}</label>
                                 <br>
-                                <form id="ajax_image" method="post" action="{{route('products_ajax_image')}}" enctype="multipart/form-data" method="post">
+                                <form class="position-relative" id="ajax_image" method="post" action="{{route('products_ajax_image')}}" enctype="multipart/form-data" method="post">
                                     @csrf
                                     <span class="btn btn-raised btn-round btn-default btn-file">
                                                     <span class="fileinput-new">{{__('Select image')}}</span>

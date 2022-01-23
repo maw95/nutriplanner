@@ -14,6 +14,8 @@
         </div>
     </div>
     <div class="content">
+        @include('alerts.success')
+        @include('alerts.errors')
         <div class="row">
                 @foreach($products as $product)
                 <div class="col-md-3 col-sm-6 col-12 flex-wrap text-center mb-4">
